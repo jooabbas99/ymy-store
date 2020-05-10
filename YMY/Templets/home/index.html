@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h1 class="display-4">Stay Safe , Stay Home</h1>
+                <p class="lead">We Will Get All Your Needs To Your Home</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- search -->
+{% include 'partials/_alert.html'%}
+{% include 'partials/_search.html'%}
+
+
+<!-- items -->
+<section id="listings" class="py-4">
+    <div class="container">
+        <h3 class="text-center mb-3">Latest Items</h3>
+        <div >
+        <div class="row ">
+            {%if items %}
+             <!-- items -->
+                {%for item in items%}
+                    <div class="col-md-6 col-lg-4 mb-4 "  >
+                        <div class="card listing-preview " >
+                            <img class="rounded card-img-top" src="{{item.photo_main.url}}" alt="Card image cap">
+                            <div class="card-body">
+                                <div class="listing-heading text-center">
+                                    <h4 class="text-primary">
+                                        {{item.title}}
+                                        <div class="listing-heading badge badge-info text-white">{{item.price}}$</span>
+                                    </h4>
+                            <a href="{% url 'item' item.id %}" class="btn btn-primary btn-block"> More Info</a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {%endfor%}
+            {%else%}
+            <div class="container-fluid">
+                <div class="col-md-12"> No Data  </div>
+            </div>
+                
+            {%endif%}
+           
+
+        </div>
+       
+    </div>
+</section>
+
+
+
+{% endblock %}

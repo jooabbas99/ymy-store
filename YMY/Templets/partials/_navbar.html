@@ -1,0 +1,104 @@
+{% load static%}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="">
+            <img src="{%static 'img/LogoMakr_2qxBph.png'%}" alt="logo">
+
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li {% if 'home' in request.path  %} class="nav-item active" {% else %} class="nav-item " {%endif %}>
+                    <a class="nav-link" href="{% url 'index' %}"> Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Categories</a>
+            </li> -->
+                <li class="nav-item dropdown" {% if 'item_list' in request.path  %} class="nav-item active" {% else %} class="nav-item " {%endif %} >
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'items'%}">all categories</a>
+                        {%for cat in categories%}
+                        <a class="dropdown-item" href="{% url 'catitemlist' cat.id %}" >{{cat.title}}</a>
+                        {%endfor%}
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li>
+                
+            </ul>
+            {% if user.is_authenticated %}
+                
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active nav-link"> welcome {{ user.last_name }}</li>
+                        <li
+                            {% if 'dashboard' in request.path %} 
+                                class="nav-item active"
+                            {% else %} 
+                                class="nav-item "
+                            {%endif %} 
+                        >
+                            <a class="nav-link" href="{% url 'dashboard' %}"> (Dashboard)</a>
+                        </li>
+                        <li
+                                    {% if 'items' in request.path %} 
+                                        class="nav-item active"
+                                    {% else %} 
+                                        class="nav-item "
+                                    {%endif %} 
+                         >
+                            <a class="nav-link" href="{%url 'my_items'%}"> Items</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a href="javascript:{ document.getElementById('logout').submit() }" class="nav-lin">
+                                <i class="fas fa-sign-out-alt nav-link">logout</i>
+                            </a>
+                            <form method="POST" action="{% url 'logout' %}" id="logout">
+                                {% csrf_token%}
+                                <input type="hidden">
+                            </form>
+
+                        </li>
+                    </ul>
+                
+            {% else %}
+                <ul class="navbar-nav ml-auto">
+                    <li {% if 'register' in request.path  %} class="nav-item active" {% else %} class="nav-item "
+                        {%endif %}>
+                        <a class="nav-link" href="{% url 'register' %}">
+                            <i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                    <li {% if 'login' in request.path  %} class="nav-item active" {% else %} class="nav-item " {%endif %}>
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Login
+                        </a>
+                    </li>
+                </ul>
+            {%endif%}
+            <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form> -->
+
+        </div>
+        <div class="pos-f-t">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                    <h5 class="text-white h4">Collapsed content</h5>
+                    <span class="text-muted">Toggleable via the navbar brand.</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nav>
+

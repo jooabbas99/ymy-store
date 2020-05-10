@@ -1,0 +1,39 @@
+
+<section id="showcase">
+    <div class="container text-center">
+        <div class="home-search p-5">
+            <div class="overlay p-5">
+                <h1 class="display-4 mb-4">
+                    Property Searching Just Got So Easy
+                </h1>
+                
+                <div class="search">
+                    <form action="{% url 'search' %}" >
+                        <!-- Form Row 1 -->
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label class="sr-only">search</label>
+                                <input type="text" name="itemName" class="form-control"
+                                    placeholder="search" value = "{{values.itemName}}" >
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="sr-only">categories</label>
+                                <select name="category" class="form-control">
+                                    <option selected="true" disabled="disabled" value = "{{values.category}}">categories (All)</option>
+                                    {%for cat in categories%}
+                                        <option value="{{cat.id}}">{{cat.title}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="sr-only">max price</label>
+                                <input type="text" name="maxPrice" value = "{{ values.maxPrice }}" class="form-control" placeholder="max price">
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

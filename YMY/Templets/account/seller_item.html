@@ -1,0 +1,88 @@
+
+{% extends 'base.html'%}
+{%block content%}
+<section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        {% include 'partials/_alert.html'%}
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+           
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> My Items</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+  
+  <section id="items_view_saller" class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Welcome {{user.first_name}} {{user.last_name}}</h2>
+            <p>Here are the items that you have </p>
+            {%if items%}
+            <table class="table table-striped ">
+                <thead>
+                  <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">description</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                    {%for item in items %}
+                    <tr>
+                        <th scope="row">{{item.id}}</th>
+                        <td>
+                            <a class="btn btn-light" href="{%url 'item' item.id%}">{{item.title}}</a>
+
+                        </td>
+                        
+                        <td>
+                            {{item.price}}
+                        </td>
+                        <td>{{item.descreption}}</td>
+                        <td>
+                          <form id = "del" action="{% url 'delete_item '%}" method="POST" >
+                            {% csrf_token%}
+                            <a class="btn btn-light" href="javascript:{ document.getElementById('del').submit() }">delete</a>
+                            <input type="hidden" name="item_id" , value="{{item.id}}">
+                          </form>
+                        
+                        </td>
+                       
+                    </tr>
+                    {%endfor%}
+              
+                </tbody>
+              </table>
+              {%else%}
+              <hr>
+              <br>
+                <h3 class="container-fluid">
+                   No Item For You
+                </h3>
+                <br>
+                <hr>
+              {%endif%}
+              <hr>
+              <tr scope="row">
+                <td class="align-content-center" colspan="5">
+                  <td>
+                    <a class="btn btn-info" href="{% url 'admin_area' %}">admin area </a>
+                  </td>
+                </td>
+              </tr>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+{%endblock%}
